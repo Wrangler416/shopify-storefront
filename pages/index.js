@@ -23,7 +23,7 @@ export default function Index({products}) {
     <div>
       <Grid container spacing ={2}>
       {products.map((product) => (
-         <Grid item md ={3} 
+         <Grid item md ={4} 
                 key={product.id}>
                   <Link href={`/product/${product.id}`}>
               <Card>

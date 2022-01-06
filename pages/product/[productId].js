@@ -20,34 +20,32 @@ export async function getServerSideProps({query}){
 export default function ProductPage({product}){
    const [quantity, setQuantity] = useState(0)
 
-//this is where my problem is. it wont let me create a checkout store 
+//problem area 
 
-//the commented out below code snippet is from the shopify buy SDK documentation but it doesnt work 
+  const addToCart = async ()=> {
+         const checkout = await client.checkout.create().then((checkout) => {
+            console.log(checkout)
+         })}
 
-  // const addToCart = async ()=> {
-      //    const checkout = await client.checkout.create().then((checkout) => {
-      //       console.log(checkout)
-      //    })
+   // const addToCart = async () => {
+   //       const storage = window.localStorage
+   //       let checkoutId = storage.getItem('checkoutId')
+   //       console.log({checkoutId})
 
-   const addToCart = async () => {
-         const storage = window.localStorage
-         let checkoutId = storage.getItem('checkoutId')
-         console.log({checkoutId})
-
-         if(!checkoutId){
-            const checkout = await client.checkout.create()
-            checkoutId = checkout.id 
-            storage.setItem("checkoutId", checkoutId)
-         }
+   //       if(!checkoutId){
+   //          const checkout = await client.checkout.create()
+   //          checkoutId = checkout.id 
+   //          storage.setItem("checkoutId", checkoutId)
+   //       }
        
-         const cart = client.checkout.addLineItems(checkoutId, [{
-            variantId: product.variants[0].id,
-            quantity: quantity
+   //       const cart = client.checkout.addLineItems(checkoutId, [{
+   //          variantId: product.variants[0].id,
+   //          quantity: quantity
 
-         }])
+   //       }])
 
-         storage.setItem('cart', JSON.stringify(cart))
-   }
+   //       storage.setItem('cart', JSON.stringify(cart))
+   // }
 
    
   const router = useRouter()
