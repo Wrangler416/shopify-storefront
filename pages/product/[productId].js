@@ -4,6 +4,8 @@ import {Grid, Input, Card, CardActionArea, CardMedia, CardContent, Typography,Ca
 import {useState} from "react"
 // import { Image, Grid} from '@material-ui/core'
 
+
+//grab product id from client through destructered context param "query"
 export async function getServerSideProps({query}){
    const productId = query.productId
 
@@ -13,8 +15,19 @@ export async function getServerSideProps({query}){
    props: {product: JSON.parse(JSON.stringify(product))}
 }
 }
+//productId gets passed as product
+
 export default function ProductPage({product}){
    const [quantity, setQuantity] = useState(0)
+
+//this is where my problem is. it wont let me create a checkout store 
+
+//the commented out below code snippet is from the shopify buy SDK documentation but it doesnt work 
+
+  // const addToCart = async ()=> {
+      //    const checkout = await client.checkout.create().then((checkout) => {
+      //       console.log(checkout)
+      //    })
 
    const addToCart = async () => {
          const storage = window.localStorage
@@ -39,6 +52,7 @@ export default function ProductPage({product}){
    
   const router = useRouter()
   const {productId} = router.query
+
       console.log(product)
       return (
          <div>
@@ -57,7 +71,7 @@ export default function ProductPage({product}){
                   <CardActions>
                     <Typography>${product.price}</Typography>
                   <button onClick={addToCart}>Add to Cart</button>
-                  <input onChange={(e, {value}) => setQuantity(Number(value))}>0</input>
+                  {/* <input onChange={(e, {value}) => setQuantity(Number(value))}>0</input> */}
                   </CardActions>
               </Card>
          </div>
@@ -70,10 +84,7 @@ export default function ProductPage({product}){
       //    console.log(checkout.id)
       // }
 
-      // const addToCart = async ()=> {
-      //    const checkout = await client.checkout.create().then((checkout) => {
-      //       console.log(checkout)
-      //    })
+    
       // }
       // const addToCart = ()=> {
       //    const checkout = client.checkout.create()
